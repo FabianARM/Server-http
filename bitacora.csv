@@ -1,0 +1,5 @@
+Método,Estampilla derequest.split() Tiempo,Servidor,Refiere,URL,Datos
+GET,2020-03-25 14:07:03.976529,127.0.0.1:8080,127.0.0.1:8080,/index.html,variable=&oculto=
+GET,2020-03-25 14:07:39.444137,127.0.0.1:8080,127.0.0.1:8080,/index.html,variable=Gotas+de+lluvia%2C+no+es+el+rocio%2C+lagrimas+que+caen+...+porque+ya+no+hay+amor+&oculto=
+GET,2020-03-25 14:08:48.525361,127.0.0.1:8080,127.0.0.1:8080,/index.html,variable=Gotas+de+lluvia%2C+no+es+el+rocio%2C+lagrimas+que+caen+...+porque+ya+no+hay+amor+&oculto=
+POST,2020-03-25 14:09:03.177407,127.0.0.1:8080,127.0.0.1:8080,/post.html,=

@@ -3,4 +3,6 @@
 class RequestPost: 
     
 
-    def execute(self):
+    def execute(self, request):
+        
+        request_split = request.split(" ")

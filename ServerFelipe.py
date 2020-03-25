@@ -130,7 +130,7 @@ def threaded(my_socket, connection, fileAux):
                 bitacoraLine = ''
                 header = 'HTTP/1.1 404 Not Found\n\n'
                 response = '<html><body><center><h3>Error 404: File not found</h3><p>Servidor AK7</p></center></body></html>'.encode('utf-8')
-
+        #aqui termina el get y head. 
         elif method.strip(' ') == 'POST':
             paramsPost = string_list[len(string_list)-1]
             # print('paramPost-->', paramsPost[paramsPost.rfind('valPost='):])
