@@ -9,7 +9,7 @@ from _thread import *
 import threading 
 import os
 from datetime import datetime
- 
+import platform
 HOST,PORT = '127.0.0.1',8080
 
 my_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -39,7 +39,7 @@ def getServerResponseHeaders(myfile, requesting_file):
     header += 'Content-Length: ' + str(os.path.getsize(folderRoot + str(requesting_file))) + ' bytes\n'
     
     if(myfile.endswith(".png")):
-        mimetype = 'image/png'
+        mimetype = 'image/apng'
     elif(myfile.endswith(".css")):
         mimetype = 'text/css'
     else:
@@ -84,7 +84,7 @@ def threaded(my_socket, connection, fileAux):
                 if request.find('Accept:') != -1: #Si encuentra el accept entra. 
                     reqFileSplitted = requesting_file.split('.')
                     AcceptValue = ''
-                    if reqFileSplitted[1] != 'png': #Si no es png es textyo ? 
+                    if reqFileSplitted[1] != 'apng': #Si no es png es textyo ? 
                         AcceptValue = 'text/'+ reqFileSplitted[1]
                     else:
                         AcceptValue = 'image/'+ reqFileSplitted[1]
@@ -116,8 +116,7 @@ def threaded(my_socket, connection, fileAux):
                         file = open(myfile,'rb') 
                         response = file.read()
                         file.close()
-                
-                if not acceptHedersRecv:
+                if not acceptHedersRecv: # Si no hay error 406
                     lista = getServerResponseHeaders(myfile, requesting_file)
                     header = lista[0]
                     bitacoraLine += lista[1]
@@ -127,6 +126,7 @@ def threaded(my_socket, connection, fileAux):
                         bitacoraLine += ' ' + os.linesep
 
             except Exception as e:
+                print(e)
                 bitacoraLine = ''
                 header = 'HTTP/1.1 404 Not Found\n\n'
                 response = '<html><body><center><h3>Error 404: File not found</h3><p>Servidor AK7</p></center></body></html>'.encode('utf-8')
@@ -156,6 +156,7 @@ def threaded(my_socket, connection, fileAux):
     
         final_response = header.encode('utf-8')
         final_response += response
+        print(final_response)
         connection.send(final_response)
         connection.close()
         if bitacoraLine != '':
