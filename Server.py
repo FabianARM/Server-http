@@ -10,6 +10,7 @@ import threading
 import os
 from datetime import datetime
 from request_head_and_get import request_head_and_get 
+from request_post import request_post
 #aqui podemos configurar el socket para recibir peticiones.
 HOST = '127.0.0.1'
 PORT = 8080
@@ -23,6 +24,7 @@ class Servidor:
         self.my_socket.bind((HOST,PORT))
         self.my_socket.listen(1)
         self.request_head_get = request_head_and_get()
+        self.request_post = request_post()
         self.running = True
 
     def extractMethod(self, requestSplits):
@@ -45,12 +47,10 @@ class Servidor:
         if len(requestSplits) > 1:
             print(request)
             #Nota el responese ya se devuelve convertido en bytes.
-            if self.extractMethod(requestSplits) == 'GET':
+            if self.extractMethod(requestSplits) == 'GET' or  self.extractMethod(requestSplits) == 'HEAD':
                 header, response = self.request_head_get.execute(self.my_socket, request)
-            elif self.extractMethod(requestSplits) == 'HEAD':
-                pass
             elif self.extractMethod(requestSplits) == 'POST':
-                pass
+                header, response = self.request_post.execute(self.my_socket, request)
             final_response = header.encode('utf-8')
             final_response += response
             #print(final_response)

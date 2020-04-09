@@ -12,7 +12,7 @@ class request_head_and_get:
             request_split_space = request.split(" ")
             #Buscamos en los archivos de servidor si lo que se nos solicita esta.
             file_name = self.extract_file_name(request_split_space)
-            response = self.search_file(file_name) 
+            response, file_name = self.search_file(file_name) 
             if request.find('Accept:') != -1: #si encontramos que si hay encabezado accept
                 #-------!lo de arriba es para revisar los accept values.
                 #pero ahora es pasar el archivo que le voy a enviar a un mimetype.
@@ -56,13 +56,13 @@ class request_head_and_get:
     #Busca en el servidor el archivo que se le esta solicitando. 
     def search_file(self, request): 
         my_file = request.lstrip('/') # La variable my file contiene el archivo que se esta pidiendo esto se encuentra en la primera linea de la request.
-        if(my_file == ''):
+        if(len(my_file) == 0):
             my_file = "index.html"
         file_name = open(my_file,'rb') 
         response = file_name.read()
         file_name.close()
         print(request)
-        return response
+        return response, my_file
 
     #Revisa si el archivo que se esta pidiendo esta aceptado o no
     def check_error_406(self, accept_value, accepted_values): 
@@ -94,6 +94,7 @@ class request_head_and_get:
         return header  
 
     def extract_file_name(self, request_split):
+        
         if request_split[1].find("?") != -1:
             arguments = request_split[1].split("?")#Esto es cuando viene con un paramtro
             file_name = arguments[0].replace("/", "")
