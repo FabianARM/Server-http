@@ -11,6 +11,7 @@ import os
 from datetime import datetime
 from request_head_and_get import request_head_and_get 
 from request_post import request_post
+from bitacora_maker import bitacora_maker
 #aqui podemos configurar el socket para recibir peticiones.
 HOST = '127.0.0.1'
 PORT = 8080
@@ -25,6 +26,7 @@ class Servidor:
         self.my_socket.listen(1)
         self.request_head_get = request_head_and_get()
         self.request_post = request_post()
+        self.bitacora_maker = bitacora_maker()
         self.running = True
 
     def extractMethod(self, requestSplits):
@@ -36,16 +38,20 @@ class Servidor:
         return request
 
     def run(self): 
+        file_bit = open('bitacora.csv', 'w')
+        file_bit.write('Método,Estampilla derequest.split(' ') Tiempo,Servidor,Refiere,URL,Datos' + os.linesep)
         while self.running == True: 
             connection,address = self.my_socket.accept()
-            start_new_thread(self.attend_request, (connection, ))
+            start_new_thread(self.attend_request, (connection, file_bit))
      
     
-    def attend_request(self, connection): 
+    def attend_request(self, connection, bitfile): 
         request = self.receiveResquest(self.my_socket, connection)
         requestSplits = request.split(' ')
+        print(request)
         if len(requestSplits) > 1:
             print(request)
+            self.bitacora_maker.make_file(request,self.my_socket ,bitfile)
             #Nota el responese ya se devuelve convertido en bytes.
             if self.extractMethod(requestSplits) == 'GET' or  self.extractMethod(requestSplits) == 'HEAD':
                 header, response = self.request_head_get.execute(self.my_socket, request)

@@ -1,4 +1,6 @@
 Método,Estampilla derequest.split() Tiempo,Servidor,Refiere,URL,Datos
-GET,2020-04-08 15:03:00.287444,127.0.0.1:8080,127.0.0.1:8080,/get.html, 
-GET,2020-04-08 15:03:05.995992,127.0.0.1:8080,127.0.0.1:8080,/index.html, 
-GET,2020-04-08 15:03:06.479182,127.0.0.1:8080,127.0.0.1:8080,/styles.css, 
+GET, 2020-04-09 16:22:30.792447, 127.0.0.1, , /get.html?variable=hola&oculto=, 
+GET, 2020-04-09 16:22:39.843827, 127.0.0.1, , /index.html, 
+GET, 2020-04-09 16:22:39.950277, 127.0.0.1, , /styles.css, 
+GET, 2020-04-09 16:22:40.233277, 127.0.0.1, , /imagotipo-ECCI.png, 
+GET, 2020-04-09 16:22:40.247270, 127.0.0.1, , /imagotipo-ECCI-ver-negro.png, 
